@@ -11,19 +11,19 @@ class En_3(layers.Layer):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.green_1 = Green(output_channels=En_2.O)
-        self.green_2 = Green(output_channels=En_2.M)
+        self.green_1 = Green(output_channels=En_3.O)
+        self.green_2 = Green(output_channels=En_3.M)
 
-        self.blue_1 = Blue(M=En_2.M)
-        self.blue_2 = Blue(M=En_2.M)
-        self.blue_3 = Blue(M=En_2.M)
+        self.blue_1 = Blue(M=En_3.M)
+        self.blue_2 = Blue(M=En_3.M)
+        self.blue_3 = Blue(M=En_3.M)
 
-        self.white = Green(output_channels=En_2.M, dilation_rate=2)
-        self.green_3 = Green(output_channels=En_2.M)
+        self.white = Green(output_channels=En_3.M, dilation_rate=2)
+        self.green_3 = Green(output_channels=En_3.M)
 
-        self.pink_1 = Pink(M=En_2.M)
-        self.pink_2 = Pink(M=En_2.M)
-        self.pink_3 = Pink(M=En_2.O)
+        self.pink_1 = Pink(M=En_3.M)
+        self.pink_2 = Pink(M=En_3.M)
+        self.pink_3 = Pink(M=En_3.O)
 
     def call(self, inputs):
         green_1_output = self.green_1(inputs)
