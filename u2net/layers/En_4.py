@@ -5,23 +5,21 @@ from Pink import Pink
 
 
 class En_4(layers.Layer):
-    O = 512
-    M = 128
 
-    def __init__(self, **kwargs):
+    def __init__(self, O, M, **kwargs):
         super().__init__(**kwargs)
 
-        self.green_1 = Green(output_channels=En_4.O)
-        self.green_2 = Green(output_channels=En_4.M)
+        self.green_1 = Green(output_channels=O)
+        self.green_2 = Green(output_channels=M)
 
-        self.blue_1 = Blue(M=En_4.M)
-        self.blue_2 = Blue(M=En_4.M)
+        self.blue_1 = Blue(M=M)
+        self.blue_2 = Blue(M=M)
   
-        self.white = Green(output_channels=En_4.M, dilation_rate=2)
-        self.green_3 = Green(output_channels=En_4.M)
+        self.white = Green(output_channels=M, dilation_rate=2)
+        self.green_3 = Green(output_channels=M)
 
-        self.pink_1 = Pink(M=En_4.M)
-        self.pink_2 = Pink(M=En_4.M)
+        self.pink_1 = Pink(M=M)
+        self.pink_2 = Pink(M=O)
 
     def call(self, inputs):
         green_1_output = self.green_1(inputs)
