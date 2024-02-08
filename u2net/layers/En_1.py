@@ -45,12 +45,12 @@ class En_1(layers.Layer):
         white_output = self.white(blue_5_output)  # TODO Inspect logic from here:
 
         green_3_output = self.green_3(layers.Concatenate()(
-            [white_output, blue_5_output]))  # TODO Check whether concatenation order is correct or not:
+            [white_output, blue_5_output]))
 
-        pink_1_output = self.pink_1(layers.Concatenate()([layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(green_3_output), blue_4_output]))
-        pink_2_output = self.pink_2(layers.Concatenate()([pink_1_output, blue_3_output]))
-        pink_3_output = self.pink_3(layers.Concatenate()([pink_2_output, blue_2_output]))
-        pink_4_output = self.pink_4(layers.Concatenate()([pink_3_output, blue_1_output]))
-        pink_5_output = self.pink_5(layers.Concatenate()([pink_4_output, green_2_output]))
+        pink_1_output = self.pink_1([green_3_output, blue_4_output])
+        pink_2_output = self.pink_2([pink_1_output, blue_3_output])
+        pink_3_output = self.pink_3([pink_2_output, blue_2_output])
+        pink_4_output = self.pink_4([pink_3_output, blue_1_output])
+        pink_5_output = self.pink_5([pink_4_output, green_2_output])
 
         return layers.Add()([pink_5_output, green_1_output])
