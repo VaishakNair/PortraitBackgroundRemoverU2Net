@@ -1,6 +1,4 @@
-import tensorflow as tf
-import keras
-from keras import layers
+from tensorflow.keras import layers
 from Green import Green
 from Blue import Blue
 from Pink import Pink
@@ -51,6 +49,7 @@ class En_1(layers.Layer):
         pink_2_output = self.pink_2([pink_1_output, blue_3_output])
         pink_3_output = self.pink_3([pink_2_output, blue_2_output])
         pink_4_output = self.pink_4([pink_3_output, blue_1_output])
+
         pink_5_output = self.pink_5([pink_4_output, green_2_output])
 
         return layers.Add()([pink_5_output, green_1_output])
