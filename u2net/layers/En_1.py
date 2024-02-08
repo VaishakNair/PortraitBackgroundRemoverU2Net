@@ -42,10 +42,15 @@ class En_1(layers.Layer):
         blue_4_output = self.blue_4(blue_3_output)
         blue_5_output = self.blue_5(blue_4_output)
 
-        white_output = self.white(blue_5_output)
+        white_output = self.white(blue_5_output)  # TODO Inspect logic from here:
 
-        green_3_output = self.green_3(layers.Concatenate()([blue_5_output, white_output]))
+        green_3_output = self.green_3(layers.Concatenate()([blue_5_output, white_output]))  # TODO Check whether concatenation order is correct or not:
 
         pink_1_output = self.pink_1(layers.Concatenate()([blue_4_output, green_3_output]))
+        pink_2_output = self.pink_2(layers.Concatenate()([blue_3_output, pink_1_output]))
+        pink_3_output = self.pink_3(layers.Concatenate()([blue_2_output, pink_2_output]))
+        pink_4_output = self.pink_4(layers.Concatenate()([blue_1_output, pink_3_output]))
+
+        return layers.Add()([green_1_output, pink_4_output])
 
 
