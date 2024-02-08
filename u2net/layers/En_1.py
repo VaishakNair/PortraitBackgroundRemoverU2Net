@@ -20,3 +20,6 @@ class En_1(layers.Layer):
         blue_3 = Blue(M=En_1.M)
         blue_4 = Blue(M=En_1.M)
         blue_5 = Blue(M=En_1.M)
+
+        green_3 = Green(output_channels=En_1.M, dilation_rate=2)
+        green_4 = Green(output_channels=En_1.M)
