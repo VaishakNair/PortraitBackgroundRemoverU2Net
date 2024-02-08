@@ -4,7 +4,7 @@ from Blue import Blue
 from Pink import Pink
 
 
-class En_4(layers.Layer):
+class RSU4(layers.Layer):
 
     def __init__(self, O, M, **kwargs):
         super().__init__(**kwargs)
