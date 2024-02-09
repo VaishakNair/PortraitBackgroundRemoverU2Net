@@ -42,3 +42,21 @@ class U2Net(tf.keras.Model):
             [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_3_output), En_2_output]))
         De_1_output = self.De_1(layers.Concatenate()(
             [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_2_output), En_1_output]))
+
+        d1 = layers.Conv2D(1, kernel_size=3, padding="same")(De_1_output)
+        d2 = layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(
+            layers.Conv2D(1, kernel_size=3, padding="same")(De_2_output))
+        d3 = layers.UpSampling2D(size=(4, 4), interpolation="bilinear")(
+            layers.Conv2D(1, kernel_size=3, padding="same")(De_3_output))
+        d4 = layers.UpSampling2D(size=(8, 8), interpolation="bilinear")(
+            layers.Conv2D(1, kernel_size=3, padding="same")(De_4_output))
+        d5 = layers.UpSampling2D(size=(16, 16), interpolation="bilinear")(
+            layers.Conv2D(1, kernel_size=3, padding="same")(De_5_output))
+        d6 = layers.UpSampling2D(size=(32, 32), interpolation="bilinear")(
+            layers.Conv2D(1, kernel_size=3, padding="same")(En_6_output))
+
+        d0 = layers.Conv2D(filters=1, kernel_size=3, padding="same")(layers.Concatenate()([d1, d2, d3, d4, d5, d6]))
+
+        return [layers.Activation("sigmoid")(d0), layers.Activation("sigmoid")(d1), layers.Activation("sigmoid")(d2),
+                layers.Activation("sigmoid")(d3), layers.Activation("sigmoid")(d4), layers.Activation("sigmoid")(d5),
+                layers.Activation("sigmoid")(d6)]
