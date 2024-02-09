@@ -22,4 +22,20 @@ class U2Net(tf.keras.Model):
         self.De_1 = u2netlayers.RSU7(O=64, M=16)
 
     def call(self, inputs, training=None, mask=None):
-        pass
+        En_1_output = self.En_1(inputs)
+        En_2_output = self.En_2(layers.MaxPooling2D(pool_size=(2, 2))(En_1_output))
+        En_3_output = self.En_3(layers.MaxPooling2D(pool_size=(2, 2))(En_2_output))
+        En_4_output = self.En_4(layers.MaxPooling2D(pool_size=(2, 2))(En_3_output))
+        En_5_output = self.En_5(layers.MaxPooling2D(pool_size=(2, 2))(En_4_output))
+        En_6_output = self.En_6(layers.MaxPooling2D(pool_size=(2, 2))(En_5_output))
+
+        De_5_output = self.De_5(layers.Concatenate()(
+            [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(En_6_output), En_5_output]))
+        De_4_output = self.De_4(layers.Concatenate()(
+            [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_5_output), En_4_output]))
+        De_3_output = self.De_3(layers.Concatenate()(
+            [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_4_output), En_3_output]))
+        De_2_output = self.De_2(layers.Concatenate()(
+            [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_3_output), En_2_output]))
+        De_1_output = self.De_1(layers.Concatenate()(
+            [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_2_output), En_1_output]))
