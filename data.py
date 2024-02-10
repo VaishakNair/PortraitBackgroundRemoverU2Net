@@ -1,7 +1,7 @@
 import pathlib
 
 import tensorflow as tf
-from keras import layers
+from tensorflow.keras import layers
 
 from u2net import U2Net
 IMG_HEIGHT, IMG_WIDTH = U2Net.INPUT_IMAGE_HEIGHT, U2Net.INPUT_IMAGE_WIDTH
@@ -47,7 +47,7 @@ def get_dataset(directory, batch_size):
 
     masks = get_masks(directory)
 
-    dataset = tf.data.Dataset.zip(images, masks)
+    dataset = tf.data.Dataset.zip((images, masks))
 
     # Configure dataset for performance:
     # dataset = dataset.shuffle(buffer_size=100)
