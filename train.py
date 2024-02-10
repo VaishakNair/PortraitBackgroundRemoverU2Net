@@ -20,6 +20,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 train_output_dir = pathlib.Path("/content/drive/MyDrive/AIProjects/PortraitBackgroundRemover/TrainOutput")
 checkpoint_dir = train_output_dir / "checkpoints"
+tensorboard_dir = train_output_dir / "tensorboard"
 csv_file_path = train_output_dir / "epoch_loss_metrics.csv"
 
 
@@ -41,14 +42,20 @@ def get_initial_epoch():
         sys.exit(2)
 
 
+def create_dir_if_not_exists(path):
+    if not path.exists():
+        os.makedirs(path)
+
+
 if __name__ == "__main__":
     """ Seeding """
     np.random.seed(42)
     tf.random.set_seed(42)
 
     """ Directory for storing files """
-    # create_dir(train_output_dir)
-    # create_dir(checkpoint_dir)
+    create_dir_if_not_exists(train_output_dir)
+    create_dir_if_not_exists(checkpoint_dir)
+    create_dir_if_not_exists(tensorboard_dir)
 
     # Hyperparameters:
     batch_size = 12
@@ -86,7 +93,7 @@ if __name__ == "__main__":
                         ),
         ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=1e-7, verbose=1),
         CSVLogger(filename=csv_file_path, append=True),
-        TensorBoard(log_dir=train_output_dir / "tensorboard",
+        TensorBoard(log_dir=tensorboard_dir,
                     # histogram_freq=1  # Enable only if histograms of weights of layers are needed.
                     ),
         EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=False),
