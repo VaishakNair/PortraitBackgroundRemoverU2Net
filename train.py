@@ -1,7 +1,4 @@
 from u2net import U2Net
-import tensorflow as tf
-from tensorflow.keras import layers
-
 import getopt
 import os
 import pathlib
@@ -9,11 +6,7 @@ import sys
 import numpy as np
 import tensorflow as tf
 from data import get_dataset
-from metrics import muti_bce_loss_fusion
-from model import IMG_HEIGHT, IMG_WIDTH
-from model import deeplabv3_plus
 from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger, ReduceLROnPlateau, EarlyStopping, TensorBoard
-from tensorflow.keras.metrics import Recall, Precision
 from tensorflow.keras.optimizers import Adam
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
@@ -57,10 +50,10 @@ if __name__ == "__main__":
     create_dir_if_not_exists(checkpoint_dir)
     create_dir_if_not_exists(tensorboard_dir)
 
-    # Hyperparameters:
+    # Hyperparameters: TODO Modify as needed
     batch_size = 12
-    lr = 1e-03
-    num_epochs = 20  # TODO Modify as needed. Must be greater than initial_epoch.
+    lr = 1e-04
+    num_epochs = 20  # Must be greater than initial_epoch.
 
     # Dataset:
     train_dataset = get_dataset(directory="dataset/P3M-10k/train",
@@ -74,15 +67,13 @@ if __name__ == "__main__":
 
     if initial_epoch == 0:
         # Create a new model:
-        model = deeplabv3_plus(
-            (IMG_HEIGHT, IMG_WIDTH, 3))
-        model.compile(loss=dice_loss, optimizer=Adam(lr), metrics=[dice_coef, iou, Recall(), Precision()])
+        model = U2Net()
+        model.compile(loss="binary_crossentropy", optimizer=Adam(lr))
     else:
         # Load saved model:
         model = tf.keras.models.load_model(
             '/content/drive/MyDrive/AIProjects/PortraitBackgroundRemover'
             '/TrainOutput/checkpoints/.keras',  # TODO Point to the appropriate .keras file
-            custom_objects={'dice_loss': dice_loss}
         )
 
     callbacks = [
