@@ -10,8 +10,8 @@ from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger, ReduceLROnPla
 from tensorflow.keras.optimizers import Adam
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
-train_output_dir = pathlib.Path("/content/drive/MyDrive/AIProjects/PortraitBackgroundRemover/TrainOutput")
+home_dir = pathlib.Path("/content/drive/MyDrive/AIProjects/PortraitBackgroundRemoverU2Net")
+train_output_dir = home_dir / "TrainOutput"
 checkpoint_dir = train_output_dir / "checkpoints"
 tensorboard_dir = train_output_dir / "tensorboard"
 csv_file_path = train_output_dir / "epoch_loss_metrics.csv"
@@ -52,6 +52,7 @@ if __name__ == "__main__":
 
     # Hyperparameters: TODO Modify as needed
     batch_size = 12
+    validation_batch_size = 12
     lr = 1e-04
     num_epochs = 20  # Must be greater than initial_epoch.
 
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     train_dataset = get_dataset(directory="dataset/P3M-10k/train",
                                 batch_size=batch_size)
     valid_dataset = get_dataset(directory="dataset/P3M-10k/validation/P3M-500-P",
-                                batch_size=batch_size)
+                                batch_size=validation_batch_size)
 
     # Model:
     initial_epoch = get_initial_epoch()
@@ -72,8 +73,7 @@ if __name__ == "__main__":
     else:
         # Load saved model:
         model = tf.keras.models.load_model(
-            '/content/drive/MyDrive/AIProjects/PortraitBackgroundRemover'
-            '/TrainOutput/checkpoints/.keras',  # TODO Point to the appropriate .keras file
+            checkpoint_dir / ".keras"  # TODO Point to the appropriate .keras file
         )
 
     callbacks = [

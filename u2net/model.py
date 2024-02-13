@@ -5,8 +5,8 @@ import layers as u2netlayers
 
 class U2Net(tf.keras.Model):
     # TODO Modify as needed:
-    INPUT_IMAGE_HEIGHT = 1080
-    INPUT_IMAGE_WIDTH = 1080
+    INPUT_IMAGE_HEIGHT = 1024
+    INPUT_IMAGE_WIDTH = 1024
 
     def __init__(self):
         super().__init__()
