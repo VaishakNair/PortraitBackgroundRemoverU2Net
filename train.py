@@ -77,7 +77,7 @@ if __name__ == "__main__":
         )
 
     callbacks = [
-        ModelCheckpoint(filepath=str(checkpoint_dir / "{epoch:02d}-{val_loss:.4f}.keras"),
+        ModelCheckpoint(filepath=str(checkpoint_dir / "{epoch:02d}-{val_loss:.6f}.keras"),
                         # save_weights_only=True,
                         verbose=1,
                         # save_best_only=True  # TODO Enable
