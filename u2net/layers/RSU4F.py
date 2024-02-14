@@ -11,7 +11,7 @@ class RSU4F(layers.Layer):
         self.white_1 = Green(output_channels=M, dilation_rate=2)
         self.dashed_white_1 = Green(output_channels=M, dilation_rate=4)
         self.short_dashed_white = Green(output_channels=M, dilation_rate=8)
-        self.dashed_white_2 = Green(output_channels=M, diation_rate=4)
+        self.dashed_white_2 = Green(output_channels=M, dilation_rate=4)
         self.white_2 = Green(output_channels=M, dilation_rate=2)
         self.green_3 = Green(output_channels=O)
 
@@ -32,4 +32,4 @@ class RSU4F(layers.Layer):
 
         green_3_output = self.green_3(layers.Concatenate()([white_2_output, green_2_output]))
 
-        return layers.Add()[green_1_output, green_3_output]
+        return layers.Add()([green_1_output, green_3_output])

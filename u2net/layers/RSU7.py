@@ -10,7 +10,7 @@ class RSU7(layers.Layer):
         super().__init__(**kwargs)
 
         self.green_1 = Green(output_channels=O)
-        self.green_2 = Green(output_channels=RSU7.M)
+        self.green_2 = Green(output_channels=M)
 
         self.blue_1 = Blue(M=M)
         self.blue_2 = Blue(M=M)
