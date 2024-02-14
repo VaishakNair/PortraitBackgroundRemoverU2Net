@@ -1,5 +1,5 @@
 from tensorflow.keras import layers
-from Green import Green
+from .Green import Green
 
 
 class Pink(layers.Layer):

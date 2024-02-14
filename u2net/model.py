@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
-import layers as u2netlayers
+from . import layers as u2netlayers
 
 
 class U2Net(tf.keras.Model):

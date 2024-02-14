@@ -1,7 +1,7 @@
 from tensorflow.keras import layers
-from Green import Green
-from Blue import Blue
-from Pink import Pink
+from .Green import Green
+from .Blue import Blue
+from .Pink import Pink
 
 
 class RSU4(layers.Layer):
