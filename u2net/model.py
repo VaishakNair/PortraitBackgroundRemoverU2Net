@@ -51,7 +51,7 @@ class U2Net(tf.keras.Model):
         De_1_output = self.De_1(layers.Concatenate()(
             [layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(De_2_output), En_1_output]))
 
-        d1 = self.d1_conv_2d(De_1_output)
+        d1 = self.d1_conv2d(De_1_output)
         d2 = layers.UpSampling2D(size=(2, 2), interpolation="bilinear")(
             self.d2_conv2d(De_2_output))
         d3 = layers.UpSampling2D(size=(4, 4), interpolation="bilinear")(
