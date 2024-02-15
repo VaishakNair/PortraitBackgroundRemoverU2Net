@@ -26,7 +26,7 @@ if __name__ == "__main__":
     x = np.expand_dims(x, axis=0)
 
     """ Prediction """
-    y = model.predict(x)[0]
+    y = model.predict(x)[0][0]
     # print(f"Output shape: {y.shape}")
     # print(f"{np.max(y)}, {np.min(y)}")
     y = cv2.resize(y, (w, h))

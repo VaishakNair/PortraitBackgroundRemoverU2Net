@@ -34,7 +34,7 @@ if __name__ == "__main__":
         model = tf.keras.models.load_model(model_path)
 
         """ Prediction """
-        y = model.predict(x)[0]
+        y = model.predict(x)[0][0]
         # print(f"Output shape: {y.shape}")
         # print(f"{np.max(y)}, {np.min(y)}")
         y = cv2.resize(y, (w, h))
