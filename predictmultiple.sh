@@ -1,0 +1,1 @@
+python3 predictmultiple.py -i $1
