@@ -8,21 +8,35 @@ class U2Net(tf.keras.Model):
     INPUT_IMAGE_HEIGHT = 512
     INPUT_IMAGE_WIDTH = 512
 
-    def __init__(self):
+    # Input/ output dimensions of RSU blocks for normal and lite
+    # versions of U2Net:
+    o = [64, 128, 256, 512, 512, 512, 512, 256, 128, 64, 64]
+    m = [32, 32, 64, 128, 256, 256, 256, 128, 64, 32, 16]
+
+    o_lite = [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64]
+    m_lite = [16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16]
+
+    def __init__(self, is_lite=False):
         super().__init__()
 
-        self.En_1 = u2netlayers.RSU7(O=64, M=32)
-        self.En_2 = u2netlayers.RSU6(O=128, M=32)
-        self.En_3 = u2netlayers.RSU5(O=256, M=64)
-        self.En_4 = u2netlayers.RSU4(O=512, M=128)
-        self.En_5 = u2netlayers.RSU4F(O=512, M=256)
-        self.En_6 = u2netlayers.RSU4F(O=512, M=256)
+        o = U2Net.o
+        m = U2Net.m
+        if is_lite:
+            o = U2Net.o_lite
+            m = U2Net.m_lite
 
-        self.De_5 = u2netlayers.RSU4F(O=512, M=256)
-        self.De_4 = u2netlayers.RSU4(O=256, M=128)
-        self.De_3 = u2netlayers.RSU5(O=128, M=64)
-        self.De_2 = u2netlayers.RSU6(O=64, M=32)
-        self.De_1 = u2netlayers.RSU7(O=64, M=16)
+        self.En_1 = u2netlayers.RSU7(O=o[0], M=m[0])
+        self.En_2 = u2netlayers.RSU6(O=o[1], M=m[1])
+        self.En_3 = u2netlayers.RSU5(O=o[2], M=m[2])
+        self.En_4 = u2netlayers.RSU4(O=o[3], M=m[3])
+        self.En_5 = u2netlayers.RSU4F(O=o[4], M=m[4])
+        self.En_6 = u2netlayers.RSU4F(O=o[5], M=m[5])
+
+        self.De_5 = u2netlayers.RSU4F(O=o[6], M=m[6])
+        self.De_4 = u2netlayers.RSU4(O=o[7], M=m[7])
+        self.De_3 = u2netlayers.RSU5(O=o[8], M=m[8])
+        self.De_2 = u2netlayers.RSU6(O=o[9], M=m[9])
+        self.De_1 = u2netlayers.RSU7(O=o[10], M=m[10])
 
         self.d0_conv2d = layers.Conv2D(filters=1, kernel_size=3, padding="same")
         self.d1_conv2d = layers.Conv2D(filters=1, kernel_size=3, padding="same")
@@ -68,4 +82,3 @@ class U2Net(tf.keras.Model):
         return [layers.Activation("sigmoid")(d0), layers.Activation("sigmoid")(d1), layers.Activation("sigmoid")(d2),
                 layers.Activation("sigmoid")(d3), layers.Activation("sigmoid")(d4), layers.Activation("sigmoid")(d5),
                 layers.Activation("sigmoid")(d6)]
-

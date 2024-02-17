@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     if initial_epoch == 0:
         # Create a new model:
-        model = U2Net()
+        model = U2Net(is_lite=True)  # TODO Modify as needed
         model.compile(loss="binary_crossentropy", optimizer=Adam(lr))
     else:
         # Load saved model:
