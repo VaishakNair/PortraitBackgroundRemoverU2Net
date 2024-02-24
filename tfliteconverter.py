@@ -19,8 +19,15 @@ tflite_model_save_dir = pathlib.Path("/home/vaishak/Downloads/tflite/u2netlite")
 def get_saved_model_from_keras_model():
     #  Load .keras model:
     keras_model = tf.keras.saving.load_model(keras_model_path)
+
+    # U2Net model produces 7 outputs but TF Lite model should only have 1 output So
+    # create a new model with only the fused output of the U2Net model:
+    inputs = tf.keras.layers.Input(shape=(512, 512, 3))
+    outputs = keras_model(inputs)[0]
+    keras_model = tf.keras.Model(inputs=inputs, outputs=outputs, name="U2NetOneOutput")
+
     # Build model so that input shapes of all layers are known:
-    keras_model(np.ones(shape=(1, IMG_HEIGHT, IMG_WIDTH, 3), dtype=np.float32))
+    # keras_model(np.ones(shape=(1, IMG_HEIGHT, IMG_WIDTH, 3), dtype=np.float32))
 
     # Save as SavedModel:
     saved_model_name = keras_model_file_name.split('-')[0]
