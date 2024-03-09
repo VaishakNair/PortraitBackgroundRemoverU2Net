@@ -1,15 +1,14 @@
 import tensorflow as tf
 import pathlib
-import numpy as np
 from u2net import U2Net
 
 
 IMG_HEIGHT, IMG_WIDTH = U2Net.INPUT_IMAGE_HEIGHT, U2Net.INPUT_IMAGE_WIDTH
 
 
-keras_model_file_name = "40-0.467696.keras"
+keras_model_file_name = "40-0.301737.keras"
 keras_model_path = pathlib.Path(
-    "/home/vaishak/Downloads/checkpoints-20240221T053611Z-001/checkpoints") / keras_model_file_name
+    "/home/vaishak/Downloads") / keras_model_file_name
 
 saved_model_dir = pathlib.Path("/home/vaishak/Downloads/tflite/u2netlite/saved_model")
 
@@ -33,11 +32,11 @@ def get_saved_model_from_keras_model():
     saved_model_name = keras_model_file_name.split('-')[0]
     keras_model.save(saved_model_dir / saved_model_name, save_format="tf")
 
-    return tf.keras.saving.load_model(saved_model_dir / saved_model_name), saved_model_name
+    return saved_model_name
 
 
 if __name__ == "__main__":
-    saved_model, saved_model_name = get_saved_model_from_keras_model()
+    saved_model_name = get_saved_model_from_keras_model()
 
     # Convert the model to .tflite
     converter = tf.lite.TFLiteConverter.from_saved_model(
