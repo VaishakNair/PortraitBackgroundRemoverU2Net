@@ -38,7 +38,7 @@ class RSU7(layers.Layer):
         blue_4_output = self.blue_4(blue_3_output)
         blue_5_output = self.blue_5(blue_4_output)
 
-        white_output = self.white(blue_5_output)  # TODO Inspect logic from here:
+        white_output = self.white(blue_5_output)
 
         green_3_output = self.green_3(layers.Concatenate()(
             [white_output, blue_5_output]))
