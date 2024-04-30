@@ -1,13 +1,18 @@
+import tensorflow as tf
 from tensorflow.keras import layers
 from .Green import Green
 from .Blue import Blue
 from .Pink import Pink
 
 
+@tf.keras.saving.register_keras_serializable(package="U2Net")
 class RSU6(layers.Layer):
   
     def __init__(self, O, M, **kwargs):
         super().__init__(**kwargs)
+
+        self.O = O
+        self.M = M
 
         self.green_1 = Green(output_channels=O)
         self.green_2 = Green(output_channels=M)
@@ -47,3 +52,14 @@ class RSU6(layers.Layer):
         pink_4_output = self.pink_4([pink_3_output, green_2_output])
 
         return layers.Add()([pink_4_output, green_1_output])
+
+    def get_config(self):
+        config = super().get_config()
+        # Update the config with the custom layer's parameters
+        config.update(
+            {
+                "O": self.O,
+                "M": self.M
+            }
+        )
+        return config

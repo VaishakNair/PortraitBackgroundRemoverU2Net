@@ -3,6 +3,7 @@ from tensorflow.keras import layers
 from . import layers as u2netlayers
 
 
+@tf.keras.saving.register_keras_serializable(package="U2Net")
 class U2Net(tf.keras.Model):
     # TODO Modify as needed:
     INPUT_IMAGE_HEIGHT = 512
@@ -18,6 +19,8 @@ class U2Net(tf.keras.Model):
 
     def __init__(self, is_lite=False):
         super().__init__()
+
+        self.is_lite = is_lite
 
         o = U2Net.o
         m = U2Net.m
@@ -82,3 +85,13 @@ class U2Net(tf.keras.Model):
         return [layers.Activation("sigmoid")(d0), layers.Activation("sigmoid")(d1), layers.Activation("sigmoid")(d2),
                 layers.Activation("sigmoid")(d3), layers.Activation("sigmoid")(d4), layers.Activation("sigmoid")(d5),
                 layers.Activation("sigmoid")(d6)]
+
+    def get_config(self):
+        config = super().get_config()
+        # Update the config with the custom layer's parameters
+        config.update(
+            {
+                "is_lite": self.is_lite
+            }
+        )
+        return config
