@@ -10,8 +10,9 @@ for salient object detection. The model is trained to differentiate between back
 
 - [P3M-10k](https://paperswithcode.com/dataset/p3m-10k)
 
-## Pre-trained Model
-Check out the [Kaggle page](https://www.kaggle.com/models/vaishaknair456/u2-net-portrait-background-remover) of this project for pre-trained model with sample code (including .ipynb notebooks)
+## Trained Model
+A trained version of this model is hosted at [Kaggle](https://www.kaggle.com/models/vaishaknair456/u2-net-portrait-background-remover). It also contains
+more details about the model and sample code (including a _.ipynb_ notebook).
 
 ## Sample Input/ Output
 
