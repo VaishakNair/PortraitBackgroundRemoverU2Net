@@ -21,4 +21,7 @@ more details about the model and sample code (including a _.ipynb_ notebook).
 
 ### Output
 ![output](SampleOutput.png)
+
+##  Android app on Google Play
+[![Download](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=in.v89bhp.aiportrait)
     
